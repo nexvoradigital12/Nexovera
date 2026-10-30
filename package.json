@@ -1,0 +1,12 @@
+{
+  "name": "nexvora-digital-solutions",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "npm --prefix frontend run dev",
+    "dev:api": "npm --prefix backend run dev",
+    "build": "npm --prefix frontend run build",
+    "lint": "npm --prefix frontend run lint",
+    "typecheck:api": "npm --prefix backend run typecheck"
+  }
+}
