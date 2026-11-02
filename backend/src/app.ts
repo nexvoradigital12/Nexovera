@@ -3,6 +3,7 @@ import cors from "cors";
 import express, { type ErrorRequestHandler } from "express";
 import helmet from "helmet";
 import { inquiriesRouter } from "./routes/inquiries.js";
+import { postsRouter } from "./routes/posts.js";
 
 const app = express();
 const allowedOrigins = (process.env.CORS_ORIGINS ?? "http://localhost:3000")
@@ -25,6 +26,7 @@ app.use(express.json({ limit: "20kb" }));
 
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
 app.use("/api/inquiries", inquiriesRouter);
+app.use("/api/posts", postsRouter);
 
 const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   console.error("API request failed:", error);
