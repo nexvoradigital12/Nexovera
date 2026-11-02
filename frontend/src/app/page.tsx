@@ -2,8 +2,10 @@ import Link from "next/link";
 import { ProjectCard } from "@/components/project-card";
 import { ServiceCard } from "@/components/service-card";
 import { projects, services } from "@/lib/site-data";
+import { TestimonialsSection, getTestimonials } from "@/components/testimonials-section";
 
-export default function Home() {
+export default async function Home() {
+  const testimonials = await getTestimonials();
   return (
     <>
       <section className="hero-section">
@@ -42,6 +44,7 @@ export default function Home() {
         <div className="approach-copy"><p className="eyebrow">The Nexvora difference</p><h2>Small team.<br /><span className="muted-heading">Big-picture thinking.</span></h2><p>Clear communication, considered decisions and a close-knit team invested in the details. That’s how we make digital feel a little more human.</p><Link className="button button-dark" href="/about">Get to know us <span aria-hidden="true">↗</span></Link></div>
         <div className="approach-points"><div><span>01</span><p><strong>Clarity before code</strong><small>We start with what matters to your business and your audience.</small></p></div><div><span>02</span><p><strong>Craft in every detail</strong><small>Distinctive design, thoughtful content and technology that fits.</small></p></div><div><span>03</span><p><strong>Built for what’s next</strong><small>Flexible foundations that can grow as your ambitions do.</small></p></div></div>
       </div></section>
+      <TestimonialsSection testimonials={testimonials} />
       <section className="cta-section"><div><p className="eyebrow">Have a good one in mind?</p><h2>Let’s make your<br />next move <span>matter.</span></h2></div><Link className="button button-primary" href="/contact">Tell us about it <span aria-hidden="true">↗</span></Link></section>
     </>
   );

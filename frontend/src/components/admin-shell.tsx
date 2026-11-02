@@ -4,9 +4,21 @@ import { createClient, type Session, type SupabaseClient } from "@supabase/supab
 import { useEffect, useState } from "react";
 import type { FormEvent } from "react";
 import { AdminBlogPanel } from "./admin-blog-panel";
+import { AdminServicesPanel } from "./admin-services-panel";
+import { AdminProjectsPanel } from "./admin-projects-panel";
+import { AdminTestimonialsPanel } from "./admin-testimonials-panel";
+import { AdminSettingsPanel } from "./admin-settings-panel";
 
-// Re-export inquiry panel inline so we don't duplicate auth logic
-type Tab = "inquiries" | "blog";
+type Tab = "inquiries" | "services" | "portfolio" | "testimonials" | "blog" | "settings";
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: "inquiries",    label: "Inquiries" },
+  { id: "services",     label: "Services" },
+  { id: "portfolio",    label: "Portfolio" },
+  { id: "testimonials", label: "Testimonials" },
+  { id: "blog",         label: "Blog" },
+  { id: "settings",     label: "Settings" },
+];
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
@@ -44,8 +56,7 @@ function InquiriesPanel({ token }: { token: string }) {
   }, [token]);
 
   async function updateStatus(id: string, status: Inquiry["status"]) {
-    setBusyId(id);
-    setMessage("");
+    setBusyId(id); setMessage("");
     try {
       const res = await fetch(`${apiUrl}/api/inquiries/${id}`, {
         method: "PATCH",
@@ -57,9 +68,7 @@ function InquiriesPanel({ token }: { token: string }) {
       setInquiries((cur) => cur.map((i) => (i.id === id ? { ...i, status } : i)));
     } catch (err) {
       setMessage(err instanceof Error ? err.message : "Could not update inquiry.");
-    } finally {
-      setBusyId("");
-    }
+    } finally { setBusyId(""); }
   }
 
   const newCount = inquiries.filter((i) => i.status === "new").length;
@@ -158,8 +167,7 @@ export function AdminShell() {
   async function signIn(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (!supabase) return;
-    setLoading(true);
-    setMessage("");
+    setLoading(true); setMessage("");
     try {
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) { setMessage(error.message); setLoading(false); }
@@ -202,28 +210,28 @@ export function AdminShell() {
     <div className="admin-shell">
       <div className="admin-shell-header">
         <nav className="admin-tabs" aria-label="Admin sections">
-          <button
-            type="button"
-            className={tab === "inquiries" ? "admin-tab admin-tab-active" : "admin-tab"}
-            onClick={() => setTab("inquiries")}
-          >
-            Inquiries
-          </button>
-          <button
-            type="button"
-            className={tab === "blog" ? "admin-tab admin-tab-active" : "admin-tab"}
-            onClick={() => setTab("blog")}
-          >
-            Blog
-          </button>
+          {TABS.map(({ id, label }) => (
+            <button
+              key={id}
+              type="button"
+              className={tab === id ? "admin-tab admin-tab-active" : "admin-tab"}
+              onClick={() => setTab(id)}
+            >
+              {label}
+            </button>
+          ))}
         </nav>
         <button className="admin-signout" type="button" onClick={signOut}>
           Sign out ↗
         </button>
       </div>
 
-      {tab === "inquiries" && <InquiriesPanel token={token} />}
-      {tab === "blog" && <AdminBlogPanel token={token} />}
+      {tab === "inquiries"    && <InquiriesPanel token={token} />}
+      {tab === "services"     && <AdminServicesPanel token={token} />}
+      {tab === "portfolio"    && <AdminProjectsPanel token={token} />}
+      {tab === "testimonials" && <AdminTestimonialsPanel token={token} />}
+      {tab === "blog"         && <AdminBlogPanel token={token} />}
+      {tab === "settings"     && <AdminSettingsPanel token={token} />}
     </div>
   );
 }

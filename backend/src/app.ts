@@ -4,6 +4,10 @@ import express, { type ErrorRequestHandler } from "express";
 import helmet from "helmet";
 import { inquiriesRouter } from "./routes/inquiries.js";
 import { postsRouter } from "./routes/posts.js";
+import { projectsRouter } from "./routes/projects.js";
+import { servicesRouter } from "./routes/services.js";
+import { settingsRouter } from "./routes/settings.js";
+import { testimonialsRouter } from "./routes/testimonials.js";
 
 const app = express();
 const allowedOrigins = (process.env.CORS_ORIGINS ?? "http://localhost:3000")
@@ -27,6 +31,10 @@ app.use(express.json({ limit: "20kb" }));
 app.get("/health", (_req, res) => res.json({ status: "ok" }));
 app.use("/api/inquiries", inquiriesRouter);
 app.use("/api/posts", postsRouter);
+app.use("/api/services", servicesRouter);
+app.use("/api/projects", projectsRouter);
+app.use("/api/testimonials", testimonialsRouter);
+app.use("/api/settings", settingsRouter);
 
 const errorHandler: ErrorRequestHandler = (error, _req, res, _next) => {
   console.error("API request failed:", error);

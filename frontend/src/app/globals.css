@@ -427,3 +427,49 @@ button, a { -webkit-tap-highlight-color: transparent; }
   .admin-blog-item-top { flex-direction: column; }
   .admin-blog-actions { flex-wrap: wrap; }
 }
+
+/* ── Testimonials public section ─────────────────────────────────────────── */
+.testimonials-section { background: #edf1e9; }
+.testimonials-inner { padding-top: 84px; padding-bottom: 90px; }
+.testimonials-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 44px; }
+.testimonial-card { display: flex; flex-direction: column; gap: 18px; padding: 28px 24px 24px; border: 1px solid #dde6d8; background: rgba(255,255,255,.7); }
+.testimonial-mark { color: #a3c46e; font-size: 28px; line-height: 1; }
+.testimonial-quote { margin: 0; color: #3d4e3f; font-size: 13px; line-height: 1.8; font-style: italic; flex: 1; }
+.testimonial-footer { display: flex; flex-direction: column; gap: 3px; padding-top: 14px; border-top: 1px solid #dde6d8; }
+.testimonial-footer strong { font-size: 12px; font-weight: 600; }
+.testimonial-footer span { color: #7a8a7c; font-size: 10px; }
+
+/* ── Shared CRUD form styles (services, projects, testimonials) ───────────── */
+.crud-form { display: flex; flex-direction: column; gap: 16px; margin-top: 28px; }
+.crud-form label { display: flex; flex-direction: column; gap: 7px; color: #48554a; font-size: 10px; font-weight: 600; }
+.crud-form label > span { color: #80a94c; }
+.crud-form input, .crud-form textarea, .crud-form select { width: 100%; min-height: 42px; padding: 9px 11px; border: 1px solid var(--line); outline: none; color: #344138; background: #fff; font-size: 12px; transition: border-color .2s ease; }
+.crud-form textarea { resize: vertical; min-height: 110px; line-height: 1.6; }
+.crud-form input:focus, .crud-form textarea:focus { border-color: #91b365; }
+.crud-form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.crud-form-row { display: flex; flex-wrap: wrap; align-items: center; gap: 20px; }
+.crud-inline-label { flex-direction: row !important; align-items: center; gap: 9px !important; }
+.crud-inline-label input { width: 80px; min-height: 36px; }
+.crud-hint { color: #8d978f; font-weight: 400; font-size: 9px; }
+.crud-badges { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 6px; }
+.crud-category { padding: 3px 8px; background: #e8f0e2; color: #527536; font-size: 8px; font-weight: 700; letter-spacing: .8px; text-transform: uppercase; }
+
+/* ── Settings panel ──────────────────────────────────────────────────────── */
+.settings-form { margin-top: 28px; }
+.settings-group { padding: 24px; border: 1px solid var(--line); background: rgba(255,255,255,.55); }
+.settings-group + .settings-group { margin-top: 14px; }
+.settings-group-title { margin: 0 0 20px; font-size: 13px; font-weight: 600; letter-spacing: -.2px; }
+.settings-social-label { text-transform: capitalize; }
+.admin-message-ok { color: #4d7832 !important; }
+
+@media (max-width: 900px) {
+  .testimonials-grid { grid-template-columns: 1fr 1fr; }
+  .crud-form-grid { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .testimonials-grid { grid-template-columns: 1fr; }
+  .testimonials-inner { padding-top: 55px; padding-bottom: 60px; }
+  .testimonial-card { padding: 20px 16px; }
+  .crud-form-row { gap: 12px; }
+  .settings-group { padding: 16px; }
+}
